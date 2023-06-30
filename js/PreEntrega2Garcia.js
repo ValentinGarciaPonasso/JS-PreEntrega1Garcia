@@ -33,27 +33,26 @@ function seleccioneTipoDocumento () {
 
 do{
     continuar = '';
-
     accion = prompt (`¿Usted ya es socio? : \n
                 -1: SI \n
                 -2: NO (Crear nuevo Socio)`);
 
-
     if((accion == 1) || (accion == 'si') || (accion == 'SI')){
-
-        console.log ('Me encuentro en la seccion de búsqueda')
-
-        //agregar metodo de busqueda de cuotas por nombre de socio
-        //agregar consulta de cuota a pagar y metodo q la pague con un if hacemos elegir si quiere pagar o no, si paga ponemos pagaCuota como true.
-
+        console.log ('Se encuentra en la seccion de búsqueda')
+        ///Solicita Documento para buscar en el array si hay algun objeto con ese numero
         ciBusqueda = prompt('Ingrese su documento')
+
         arrayCuotas.forEach (function (CuotaSocio){
             console.log ('Buscando cuota ...');
+            ////Busca cualquier cuota que coincida con el documento indicado y que no se encuentre paga
             if ((CuotaSocio.documento === ciBusqueda) && (CuotaSocio.cuotaPaga == false)){
                 alert ('Cuota encontrada');
                 console.log (CuotaSocio);
-                let accionPagar = prompt ('Desea pagar la cuota?')
-                if (accionPagar === 'si'){
+                ///Consulta si quiere pagar la cuota encontrada
+                let accionPagar = prompt (`¿Desea pagar la cuota? : \n
+                -1: SI \n
+                -2: NO`)
+                if ((accionPagar == 1) || (accionPagar == 'si') || (accionPagar == 'SI')){
                     CuotaSocio.pagarCuota(true)
                     alert ('Pagando cuota...');
                 } else {
@@ -62,14 +61,19 @@ do{
                 encontroSocio = true;            
             }
         });
+
+        ///Si no encuentra socio lo pone en pantalla
         if (encontroSocio != true){
             alert ('El socio no existe')
         }
+
         console.log (arrayCuotas);
-        continuar = prompt ('¿Desea volver al menu principal?'); 
+        continuar = prompt (`¿Desea volver al menu principal? \n
+                    -1: SI \n
+                    -2: NO `);     
 
+    ///Ingresa a la seccion para crear socio
     }else if ((accion == 2) || (accion == 'no') || (accion == 'NO')) {
-
         console.log ('Me encuentro en la seccion de nuevo socio')
         seleccioneTipoSocio ();
         //Switch para setear el precio
@@ -90,6 +94,7 @@ do{
                 alert ('El tipo de socio ingresado no es válido');
                 continuar = 'si';
         }
+
         // console.log (importe + socio + continuar); /// (Logea para pruebas)
         // en caso de no haber ingresado un socio válido, saltea la asignacion de documento y salta al final del while
         if (continuar != 'si') {
@@ -126,17 +131,15 @@ do{
                 alert ('El Tipo de documento ingresado no es válido')
             }
         }    
-        continuar = prompt ('¿Desea volver al menu principal?'); 
 
+        continuar = prompt (`¿Desea volver al menu principal? \n
+                    -1: SI \n
+                    -2: NO `);  
 
     } else {
-    
-        alert('Elija una opcion válida')
-
+            alert('Elija una opcion válida')
     }
-
-
-} while (continuar != 'no');
+} while ((continuar != 'no') && (continuar != 'NO') && (continuar != 2));
 
 
 
